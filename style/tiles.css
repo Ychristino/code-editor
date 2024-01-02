@@ -1,0 +1,75 @@
+tile_group{
+    display: flex;
+    flex-direction: column;
+}
+tile{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 8px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+tile_header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+tile_header *{
+    flex: 1;
+    border-radius: 8px;
+    border: none;
+    padding: 5px;
+    pointer-events: none;
+
+}
+
+tile_body{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+}
+
+tile.condition{
+    background-color: rgb(132, 132, 190);
+}
+tile.logical{
+    background-color: rgb(183, 151, 214);
+}
+tile.constant{
+    background-color: rgb(120, 243, 167);
+}
+tile.validation{
+    background-color: rgb(243, 120, 120);
+}
+tile.definition{
+    background-color: rgb(173, 241, 250);
+}
+
+tile:hover, tile>*:hover{
+    cursor: pointer;
+}
+
+.draggable:hover, .draggable>*:hover{
+    cursor: grab;
+}
+.draggable:active, .draggable>*:active{
+    cursor: grabbing;
+}
+.iteractive tile_header input{
+    pointer-events: auto;
+    cursor: text;
+}
