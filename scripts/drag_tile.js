@@ -9,6 +9,7 @@ function makeElementDraggable(tile) {
      tile.addEventListener('mousedown', function (e) {
          // set mouse state to true
          mousedown = true;
+         set_topmost(tile, code_area);
          // subtract offset
          x = tile.offsetLeft - e.clientX;
          y = tile.offsetTop - e.clientY;
@@ -46,8 +47,27 @@ function makeELementUsable(element) {
     new_element.style.position = 'absolute';
     new_element.classList.add('draggable');
     new_element.classList.add('iteractive');
+    new_element.draggable = true;
+
     makeElementDraggable(new_element)
     document.querySelector("#code").appendChild(new_element);
+    
+    // let body = new_element.querySelector('tile_body');
+    // body.addEventListener('drop', (event)=> {
+    //     event.preventDefault()
+    //     console.log('dropou')
+
+    // })
+    // body.addEventListener('dragover', (event)=> {
+    //     event.preventDefault()
+    //     console.log('over')
+    // });
 }
 
+function set_topmost(element, area){
+    area.childNodes.forEach(element => {
+        element.style.zIndex = 0;
+    });
+    element.style.zIndex = 1;
+}
 export {makeELementUsable, makeElementDraggable};

@@ -1,4 +1,5 @@
 import {makeELementUsable, makeElementDraggable} from './drag_tile.js';
+import {add_item} from './drop_tile.js';
 
 function display_list(json_list) {
     const TILES_LIST = document.getElementById('tiles_list');
@@ -40,7 +41,8 @@ function create_tile_header(jsonNode){
 }
 
 function create_tile_body(jsonNode){
-    return document.createElement('tile_body');
+    const TILE_BODY = document.createElement('tile_body');
+    return TILE_BODY;
 }
 
 function create_tile(jsonNode){
@@ -54,7 +56,7 @@ function create_tile(jsonNode){
     ITEM.appendChild(HEADER);
 
     if (jsonNode.has_scope){
-        ITEM.appendChild(BODY)
+        ITEM.appendChild(BODY)    
     }
 
     ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
