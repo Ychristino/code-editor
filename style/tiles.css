@@ -31,7 +31,6 @@ tile_header *{
     border: none;
     padding: 5px;
     pointer-events: none;
-
 }
 
 tile_body{
@@ -70,6 +69,6 @@ tile:hover, tile>*:hover{
     cursor: grabbing;
 }
 .iteractive tile_header input{
-    pointer-events: auto;
+    /*pointer-events: auto;*/
     cursor: text;
 }

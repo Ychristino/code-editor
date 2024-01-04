@@ -1,14 +1,32 @@
 import {makeELementUsable, makeElementDraggable} from './drag_tile.js';
 import {add_item} from './drop_tile.js';
 
+function get_tile_list(query_selector, tile_type){
+    let element = document.querySelector(query_selector);
+
+    if (!element){
+        let new_group = document.createElement('tile_group');
+        new_group.id = tile_type;
+        let list = document.querySelector('div#tiles_list');
+        list.appendChild(new_group);
+        return new_group;
+    }
+    return element;
+}
+
 function display_list(json_list) {
-    const TILES_LIST = document.getElementById('tiles_list');
 
     json_list.forEach(element => {
+        const TILE_LIST = get_tile_list(`tile_group#${element.tile_type}`, element.tile_type);
+        const TILE_ITEM = document.createElement('tile_item');
         const ITEM = create_tile(element)
-        TILES_LIST.appendChild(ITEM);
+
+
+        TILE_ITEM.appendChild(ITEM);
+        TILE_LIST.appendChild(TILE_ITEM);
     });
 }
+
 function create_tile_header(jsonNode){
     const HEADER = document.createElement('tile_header');
 
@@ -56,7 +74,7 @@ function create_tile(jsonNode){
     ITEM.appendChild(HEADER);
 
     if (jsonNode.has_scope){
-        ITEM.appendChild(BODY)    
+        ITEM.appendChild(BODY)
     }
 
     ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))

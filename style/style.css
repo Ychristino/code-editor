@@ -8,7 +8,7 @@ main{
     flex-direction: row;
     gap: 16px;
 }
-main div#tiles{
+main div#tiles_list{
     /* flex: 1; */
     max-height: 100vh;
     overflow-y: scroll;
