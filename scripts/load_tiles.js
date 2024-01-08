@@ -1,15 +1,14 @@
-import {makeELementUsable, makeElementDraggable} from './drag_tile.js';
-import {add_item} from './drop_tile.js';
+import {makeELementUsable} from './drag_tile.js';
 
-function get_tile_list(query_selector, tile_type){
-    let element = document.querySelector(query_selector);
+function get_tile_list(tile_type){
+    let element = document.querySelector(`tileGroup#${tile_type}`);
 
     if (!element){
-        let new_group = document.createElement('tile_group');
-        new_group.id = tile_type;
-        let list = document.querySelector('div#tiles_list');
-        list.appendChild(new_group);
-        return new_group;
+        const LIST = document.querySelector('div#tiles_list');
+        const NEW_GROUP = document.createElement('tileGroup');
+        NEW_GROUP.id = tile_type;
+        LIST.appendChild(NEW_GROUP);
+        return NEW_GROUP;
     }
     return element;
 }
@@ -17,8 +16,8 @@ function get_tile_list(query_selector, tile_type){
 function display_list(json_list) {
 
     json_list.forEach(element => {
-        const TILE_LIST = get_tile_list(`tile_group#${element.tile_type}`, element.tile_type);
-        const TILE_ITEM = document.createElement('tile_item');
+        const TILE_LIST = get_tile_list(element.tile_type);
+        const TILE_ITEM = document.createElement('tileItem');
         const ITEM = create_tile(element)
 
 
@@ -28,7 +27,7 @@ function display_list(json_list) {
 }
 
 function create_tile_header(jsonNode){
-    const HEADER = document.createElement('tile_header');
+    const HEADER = document.createElement('tileHeader');
 
     let html_output = '';
 
@@ -59,7 +58,7 @@ function create_tile_header(jsonNode){
 }
 
 function create_tile_body(jsonNode){
-    const TILE_BODY = document.createElement('tile_body');
+    const TILE_BODY = document.createElement('tileBody');
     return TILE_BODY;
 }
 
@@ -77,7 +76,8 @@ function create_tile(jsonNode){
         ITEM.appendChild(BODY)
     }
 
-    ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
+    makeELementUsable(ITEM)
+    // ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
     return ITEM;
 }
 async function loadJSON() {
