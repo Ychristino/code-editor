@@ -1,4 +1,5 @@
-import {drop_tile,get_element_bellow} from './drop_tile.js';
+import {drop_tile,get_element_bellow,get_drop_position} from './drop_tile.js';
+
 function makeElementDraggable(tile, isNew) {
 
     const CODE_AREA = document.querySelector('#code_area');
@@ -7,26 +8,28 @@ function makeElementDraggable(tile, isNew) {
     let mousedown = false;
     let currentDroppable = null;
     let focused_element = null;
-
     // tile event mousedown
     tile.addEventListener('mousedown', function (e) {
         mousedown = true;
+        focused_element = e.target.tagName !== 'TILE' ? e.target.closest('tile') : e.target
         x = tile.offsetLeft - e.clientX;
         y = tile.offsetTop - e.clientY;
         e.preventDefault(); // prevent browser's default drag behavior
-        focused_element = e.target.tagName !== 'TILE' ? e.target.closest('tile') : e.target
+        focused_element.style.position = 'absolute';
     }, true);
 
 
     // tile event mouseup
     document.addEventListener('mouseup', function (e) { // Notice the change here
         if (focused_element){
+
             tile.offsetX = e.clientX - focused_element.getBoundingClientRect().left;
             tile.offsetY = e.clientY - focused_element.getBoundingClientRect().top;
 
-            drop_tile(e.clientX, e.clientY, focused_element, isNew)
+            drop_tile(e.clientX, e.clientY, focused_element)
+            clear_place_holder();
             tile.classList.remove('moving');
-            
+           
             isNew = false;
             focused_element = null;
             mousedown = false;
@@ -36,28 +39,47 @@ function makeElementDraggable(tile, isNew) {
 
     // element mousemove to stop
     document.addEventListener('mousemove', function (e) {
-        
         if (mousedown) {
             let new_x = e.clientX + x;
             let new_y = e.clientY + y;
 
-            const ELEMENT_BELLOW = get_element_bellow(new_x, new_y, focused_element);
+            const ELEMENT_BELLOW = get_element_bellow(e.clientX, e.clientY, focused_element);
 
-            if (!isNew){
-                // Não precisa verificar RANGE do code_area, uma vez que ele faz o scroll
-                // if (new_x >= 0 && new_x <= (CODE_AREA.offsetWidth - focused_element.offsetWidth))
-                focused_element.style.left = `${new_x}px`;
-                // if (new_y >= 0 && new_y <= (CODE_AREA.offsetHeight - focused_element.offsetHeight))
-                focused_element.style.top = `${new_y}px`;
+            if (ELEMENT_BELLOW && ELEMENT_BELLOW.tagName === 'TILEBODY' &&
+                !document.elementsFromPoint(e.clientX, e.clientY).includes(document.querySelector('div#tiles_list'))) // Previnir de setar placeholder na listagem
+            {
+                set_place_holder(ELEMENT_BELLOW, focused_element);
             }
-            else{
-                focused_element.style.left = `${new_x}px`;
-                focused_element.style.top = `${new_y}px`;
+            else if(!ELEMENT_BELLOW || (ELEMENT_BELLOW.tagName !== 'TILEBODY' && ELEMENT_BELLOW.tagName !== 'TILEPLACEHOLDER')){
+                clear_place_holder();
             }
-            
 
-         }
-     }, true);
+            focused_element.style.left = `${new_x}px`;
+            focused_element.style.top = `${new_y}px`;
+        }
+    }, true);
+}
+
+function clear_place_holder(){
+    document.querySelectorAll('tilePlaceHolder').forEach(el=> el.remove());
+}
+
+function set_place_holder(elementBellow, draggedTile) {
+    clear_place_holder();
+
+    const DROP_POSITION = get_drop_position(elementBellow, draggedTile);
+    
+    const TILE_PLACE_HOLDER = document.createElement('tilePlaceHolder');
+    TILE_PLACE_HOLDER.style.position = 'relative';
+    TILE_PLACE_HOLDER.style.display = 'block';
+    TILE_PLACE_HOLDER.style.height = `${draggedTile.offsetHeight}px`;
+
+    if(DROP_POSITION === null) {
+        elementBellow.appendChild(TILE_PLACE_HOLDER);
+    } else {
+        elementBellow.insertBefore(TILE_PLACE_HOLDER, DROP_POSITION);
+    }
+
 }
 
 function makeELementUsable(tile) {

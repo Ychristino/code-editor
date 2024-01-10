@@ -28,6 +28,7 @@ tileItem {
   
 tile {
     position: absolute;
+    display: block;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.8);
     min-width: 320px;
@@ -60,7 +61,9 @@ tileHeader *{
 
 tileBody {
     background-color: rgba(255, 255, 255, 0.7);
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     min-height: 20px;
     min-width: 90%;
     border-radius: 8px;
