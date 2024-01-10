@@ -37,6 +37,17 @@ div#code_area{
     right: 25px;
     background-image: url('../assets/trash-can.png');
     z-index: 999;
+    cursor: no-drop;
+}
+.generate-script{
+    position: fixed;
+    background-color: transparent;
+    border: none;
+    bottom: 100px;
+    right: 25px;
+    background-image: url('../assets/generate-script.png');
+    z-index: 999;
+    cursor: pointer;
 }
 
 @keyframes shake {
