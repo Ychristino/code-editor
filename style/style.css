@@ -7,15 +7,16 @@ main{
     flex-direction: row;
 }
 div#tiles_list{
-    flex: 1;
     display: flex;
     flex-direction: column;
-    min-width: 450px;
+
+    min-width: 200px;
+    width: 370px;
     height: 100vh;
-    margin: 0;
-    padding: 0;
+
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: scroll;
+    resize: horizontal;
 }
 div#code_area{
     flex: 3;

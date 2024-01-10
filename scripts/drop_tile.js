@@ -36,14 +36,22 @@ function validate_drop(element_to_drop, tile){
 
 function append_to_tile_body(element_to_drop, tile){
     element_to_drop.appendChild(tile)
-    tile.style.top = 0;
-    tile.style.left = 0;
+    tile.style.top = null;
+    tile.style.left = null;
+    // tile.style.marginTop = '10px';
+    // tile.style.marginLeft = '10px';
+    // tile.style.marginBottom = '10px';
+    // tile.style.marginRight = '10px';
+    let padding_y = parseInt(window.getComputedStyle(element_to_drop, null).getPropertyValue('padding-top')) 
+                  + parseInt(window.getComputedStyle(element_to_drop, null).getPropertyValue('padding-bottom'));
+    let padding_x = parseInt(window.getComputedStyle(element_to_drop, null).getPropertyValue('padding-left')) 
+                  + parseInt(window.getComputedStyle(element_to_drop, null).getPropertyValue('padding-right'));
 
     // Recalcula tamanho do tilebody
-    element_to_drop.style.height = `${tile.offsetHeight}px`;
+    element_to_drop.style.height = `${tile.offsetHeight + padding_y}px`;
 
-    if (tile.offsetWidth > element_to_drop.offsetWidth)
-        element_to_drop.style.width = `${tile.offsetWidth }px`;
+    if ((tile.offsetWidth + padding_x) > element_to_drop.offsetWidth)
+        element_to_drop.style.width = `${tile.offsetWidth + padding_x}px`;
 }
 
 function append_to_code_area(position_x, position_y, tile, code_area){

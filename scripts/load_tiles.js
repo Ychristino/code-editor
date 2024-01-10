@@ -20,9 +20,10 @@ function display_list(json_list) {
         const TILE_ITEM = document.createElement('tileItem');
         const ITEM = create_tile(element)
 
-
         TILE_ITEM.appendChild(ITEM);
         TILE_LIST.appendChild(TILE_ITEM);
+
+        TILE_ITEM.style.height = `${ITEM.offsetHeight}px`;
     });
 }
 
@@ -39,7 +40,7 @@ function create_tile_header(jsonNode){
             header_display.forEach(el=>{
                 switch(el){
                     case '<label>':
-                        html_output += jsonNode.label;
+                        html_output += `<p>${jsonNode.label}</p>`;
                         break;
                     case '<input>':
                         html_output += '<input></input>';

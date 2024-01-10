@@ -1,84 +1,3 @@
-tile{
-    position: absolute;
-    
-    display: flex;
-    flex-direction: column;
-    min-height: 80px;
-    min-width: 420px;
-
-    border-radius: 6px;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-tileHeader{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    flex: 1;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    margin: 10px;
-}
-
-tileHeader *{
-    flex: 1;
-    border-radius: 8px;
-    border: none;
-}
-
-tileGroup{
-    display: flex;
-    flex-direction: column;
-
-    tileItem{
-        position: relative;
-        width: 100%;
-        min-height: 80px;
-        overflow: hidden;
-        padding: 10px;
-    }
-
-}
-
-div#code_area{
-    tile{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 50px;
-        min-width: 420px;
-        padding: 10px;
-    }
-    tileHeader{
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-        gap: 16px;
-        min-height: 20px;
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 8px;
-    }
-    tileBody{
-        position: relative;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        min-height: 20px;
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 8px;
-        padding: 10px;
-    }
-}
-
 tile.condition{
     background-color: rgb(132, 132, 190);
 }
@@ -95,6 +14,66 @@ tile.definition{
     background-color: rgb(173, 241, 250);
 }
 
-.moving{
-    transform: scale(1.1);
+tileGroup {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+}
+  
+tileItem {
+    position: relative; 
+    margin: 10px;
+}
+  
+tile {
+    position: absolute;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    min-width: 320px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+  
+tileHeader {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 5px;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    
+    gap: 10px;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+tileHeader *{
+    border: none;
+    flex: 1;
+    border-radius: 8px;
+} 
+
+tileBody {
+    background-color: rgba(255, 255, 255, 0.7);
+    display: block;
+    min-height: 20px;
+    min-width: 90%;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+tileBody:has(tile){
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+tile:not(:has(tileBody)) {
+}
+  
+tile:has(tileBody) {
 }
