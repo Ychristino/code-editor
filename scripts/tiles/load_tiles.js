@@ -81,6 +81,7 @@ function create_tile(jsonNode){
     // ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
     return ITEM;
 }
+
 async function loadJSON() {
     try {
         const response = await fetch('http://localhost:8000/tiles.json');
@@ -101,3 +102,5 @@ async function main() {
 }
 
 main();
+
+export {loadJSON};

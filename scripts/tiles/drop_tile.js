@@ -47,7 +47,7 @@ function get_drop_position(element_to_drop, tile){
 }
 
 function append_to_tile_body(element_to_drop, tile){
-    console.log(element_to_drop)
+
     if (element_to_drop.tagName === 'TILEPLACEHOLDER'){
         element_to_drop.replaceWith(tile);
         tile.style.position = 'relative';
