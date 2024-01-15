@@ -1,24 +1,24 @@
 import {makeELementUsable} from './drag_tile.js';
 
-function get_tile_list(tile_type){
-    let element = document.querySelector(`tileGroup#${tile_type}`);
+function getTileList(tileType){
+    let element = document.querySelector(`tileGroup#${tileType}`);
 
     if (!element){
         const LIST = document.querySelector('div#tiles_list');
         const NEW_GROUP = document.createElement('tileGroup');
-        NEW_GROUP.id = tile_type;
+        NEW_GROUP.id = tileType;
         LIST.appendChild(NEW_GROUP);
         return NEW_GROUP;
     }
     return element;
 }
 
-function display_list(json_list) {
+function displayList(jsonList) {
 
-    json_list.forEach(element => {
-        const TILE_LIST = get_tile_list(element.tile_type);
+    jsonList.forEach(element => {
+        const TILE_LIST = getTileList(element.tile_type);
         const TILE_ITEM = document.createElement('tileItem');
-        const ITEM = create_tile(element)
+        const ITEM = createTile(element)
 
         TILE_ITEM.appendChild(ITEM);
         TILE_LIST.appendChild(TILE_ITEM);
@@ -27,7 +27,7 @@ function display_list(json_list) {
     });
 }
 
-function create_tile_header(jsonNode){
+function createTileHeader(jsonNode){
     const HEADER = document.createElement('tileHeader');
 
     let html_output = '';
@@ -35,15 +35,15 @@ function create_tile_header(jsonNode){
     if (jsonNode.allow_input){
 
         if (jsonNode.input_config.slots){
-            let header_display = jsonNode.format.match(/<[^>]+>/g);
+            let headerDisplay = jsonNode.format.match(/<[^>]+>/g);
 
-            header_display.forEach(el=>{
+            headerDisplay.forEach(el=>{
                 switch(el){
                     case '<label>':
                         html_output += `<p>${jsonNode.label}</p>`;
                         break;
                     case '<input>':
-                        html_output += '<input></input>';
+                        html_output += '<tileInput droppable></tileInput>';
                         break;
                     default:
                         html_output += el;
@@ -58,18 +58,29 @@ function create_tile_header(jsonNode){
     return HEADER;
 }
 
-function create_tile_body(jsonNode){
+function createTileBody(jsonNode){
     const TILE_BODY = document.createElement('tileBody');
+    TILE_BODY.setAttribute('droppable', '');
     return TILE_BODY;
 }
 
-function create_tile(jsonNode){
+function createToolTip(jsonNode){
+    const DIV_TOOLTIP = document.createElement('tileTooltip');
+    const TEXT_TOOLTIP = document.createElement('tooltipText');
+
+    TEXT_TOOLTIP.innerText = jsonNode.tooltip;
+    DIV_TOOLTIP.appendChild(TEXT_TOOLTIP);
+
+    return DIV_TOOLTIP;
+}
+
+function createTile(jsonNode){
     const ITEM = document.createElement('tile');
     ITEM.id = jsonNode.name;
     ITEM.classList.add(jsonNode.tile_type);
 
-    const HEADER = create_tile_header(jsonNode);
-    const BODY = create_tile_body(jsonNode);
+    const HEADER = createTileHeader(jsonNode);
+    const BODY = createTileBody(jsonNode);
 
     ITEM.appendChild(HEADER);
 
@@ -77,6 +88,10 @@ function create_tile(jsonNode){
         ITEM.appendChild(BODY)
     }
 
+    // if (jsonNode.tooltip){
+    //     ITEM.appendChild(createToolTip(jsonNode));
+    // }
+    
     makeELementUsable(ITEM)
     // ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
     return ITEM;
@@ -97,7 +112,7 @@ async function loadJSON() {
 async function main() {
     const TILES_JSON = await loadJSON();
     if (TILES_JSON) {
-        display_list(TILES_JSON);
+        displayList(TILES_JSON);
     }
 }
 

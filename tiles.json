@@ -16,7 +16,8 @@
         "require_config":{
             "severity":null,
             "parent_tile":null
-        }
+        },
+        "tooltip":"Class Definition. Used to define a project template."
     },
     {
         "name":"def",

@@ -36,7 +36,16 @@ tile {
     box-sizing: border-box;
     user-select: none;
 }
-  
+
+tileInput{
+    background-color: rgba(255, 255, 255, 1);;
+    border-radius: 6px;
+    min-height: 30px;
+    padding: 10px;
+
+    box-sizing: border-box;
+}
+
 tileHeader {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 8px;
@@ -48,10 +57,9 @@ tileHeader {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    text-align: center;
     
     gap: 10px;
-    flex-shrink: 0;
-    flex-grow: 0;
 }
 
 tileHeader *{
