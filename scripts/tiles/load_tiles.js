@@ -35,7 +35,7 @@ function createTileHeader(jsonNode){
     if (jsonNode.allow_input){
 
         if (jsonNode.input_config.slots){
-            let headerDisplay = jsonNode.format.match(/<[^>]+>/g);
+            let headerDisplay = jsonNode.label.match(/<([^>]*)>|([^<]+)/g).filter(Boolean);
 
             headerDisplay.forEach(el=>{
                 switch(el){
@@ -91,7 +91,7 @@ function createTile(jsonNode){
     // if (jsonNode.tooltip){
     //     ITEM.appendChild(createToolTip(jsonNode));
     // }
-    
+
     makeELementUsable(ITEM)
     // ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
     return ITEM;

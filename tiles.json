@@ -2,7 +2,7 @@
     {
         "name":"class",
         "python_code":"class",
-        "label":"Para o cenário: ",
+        "label":"Para o cenário: <input>",
         "format":"<label><input>",
         "tile_type":"definition",
         "has_scope":true,
@@ -22,7 +22,7 @@
     {
         "name":"def",
         "python_code":"def",
-        "label":"Cria lista de passos, que chamo de: ",
+        "label":"Cria lista de passos, que chamo de: <input>",
         "format":"<label><input>",
         "tile_type":"definition",
         "has_scope":true,
@@ -41,8 +41,8 @@
     {
         "name":"var",
         "python_code":"",
-        "label":"Cria uma nova variável de nome: ",
-        "format":"<label><input>",
+        "label":"Cria uma nova variável de nome: <input> com Valor = <input>",
+        "format":"<input> = <input>",
         "tile_type":"definition",
         "has_scope":false,
         "allow_input":true,
@@ -61,7 +61,7 @@
     {
         "name":"if",
         "python_code":"if",
-        "label":"Se",
+        "label":"Se <input>",
         "format":"<label><input>",
         "tile_type":"condition",
         "has_scope":true,
@@ -80,7 +80,7 @@
     {
         "name":"elif",
         "python_code":"elif",
-        "label":"Senão, se",
+        "label":"Senão, se <input>",
         "format":"<label><input>",
         "tile_type":"condition",
         "has_scope":true,
@@ -97,10 +97,10 @@
         }
     },
     {
-        "name":"else:",
+        "name":"else",
         "python_code":"else",
         "label":"Senão",
-        "format":null,
+        "format":"<label>",
         "tile_type":"condition",
         "has_scope":true,
         "allow_input":false,
@@ -118,7 +118,7 @@
     {
         "name":"or",
         "python_code":"or",
-        "label":"OU",
+        "label":"<input> OU <input>",
         "format":"<input><label><input>",
         "tile_type":"logical",
         "has_scope":false,
@@ -137,7 +137,7 @@
     {
         "name":"and",
         "python_code":"and",
-        "label":"E",
+        "label":"<input> E <input>",
         "format":"<input><label><input>",
         "tile_type":"logical",
         "has_scope":false,
@@ -195,7 +195,7 @@
     {
         "name":"assert",
         "python_code":"assert",
-        "label":"Apresenta erro se valor for diferente de: ",
+        "label":"Apresenta erro se valor for diferente de: <input>",
         "format":"<label><input>",
         "tile_type":"validation",
         "has_scope":true,
@@ -234,7 +234,7 @@
     {
         "name":"catch",
         "python_code":"catch",
-        "label":"Se o erro apresentado for: ",
+        "label":"Se o erro apresentado for: <input>",
         "format":"<label><input>",
         "tile_type":"validation",
         "has_scope":true,
