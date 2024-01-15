@@ -13,7 +13,7 @@ async function generateScript(event){
         const MAIN_TILE = TILES_JSON.find(tileModel => tileModel.name == tile.id );
         // python_code += writeline(MAIN_TILE)
         const MAIN_HEADER = read_header_code_block(tile);
-
+        console.log(MAIN_HEADER)
         // console.log(2,read_body_code_block(tile));
         
         // tile.querySelectorAll('tileHeader tile').forEach(headerElement=>{
@@ -29,33 +29,28 @@ async function generateScript(event){
 
 }
 
-
 function read_header_code_block(tileElement){
+    // CAPTURA INPUTS
+    let headerInputList = tileElement.querySelectorAll(':scope > tileHeader > tileInput > tile');
 
-    const HEADER_RECURSION = (tileElement) =>{
-        let displayList = [];
-        let headerInputList = tileElement.querySelectorAll(':scope > tileHeader > tileInput > tile');
-    
-        if (headerInputList.length === 0)
-            return displayList;
-    
-        headerInputList.forEach(childElement=>{
-            displayList.push(childElement);
-            displayList = displayList.concat(HEADER_RECURSION(childElement));
-        });
-        return displayList    
-    };
+    if (headerInputList.length === 0) return writeline(tileElement);
+    let inputData = [];
 
-    HEADER_RECURSION(tileElement).forEach((headerTile, index)=>{
-        let currTileJSON = TILES_JSON.find(tileModel => tileModel.name == headerTile.id );
-
-        if (currTileJSON.allow_input){
-            currTileJSON.input_config.slots
-        }
-        console.log(writeline(HEADER_RECURSION(tileElement)));
+    headerInputList.forEach((inputField, index)=>{
+        inputData.push(read_header_code_block(inputField));
     });
+     
+    let formattedData = formatInput(writeline(tileElement), inputData).trim();
+    return formattedData
 }
 
+function formatInput(string, inputTiles){
+    // let splittedString = string.split(/{.*?}/g);
+    var i = 0;
+    return string.replace(/{.*?}/g, () => {
+        return ' ' + inputTiles[i++] + ' ';
+    });
+}
 
 // function read_body_code_block(tile){
 //     const TILEBODY = tile.querySelectorAll('tileBody tile');
@@ -97,13 +92,13 @@ function writeline(tileElement){
                 code_line += `${currTileJSON.python_code}`;
                 break;
             case '<input>':
-                code_line += tileInput.shift();
+                code_line += '{tileInput}';
                 break;
             default:
                 code_line += el;
             }
     });
 
-    // code_line += currTileJSON.has_scope ? ':' : '';
+    code_line += currTileJSON.has_scope ? ':' : '';
     return code_line;
 }
