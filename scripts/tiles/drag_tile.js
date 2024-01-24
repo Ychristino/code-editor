@@ -1,4 +1,4 @@
-import {dropTile,getElementBellow,getDropPosition} from './drop_tile.js';
+import {dropTile, getElementBellow, getDropPosition, validateDrop} from './drop_tile.js';
 
 function makeElementDraggable(tileElement, isNew) {
 
@@ -29,10 +29,11 @@ function makeElementDraggable(tileElement, isNew) {
             dropTile(e.clientX, e.clientY, focusedElement)
             clearPlaceHolder();
             tileElement.classList.remove('moving');
-           
+
             isNew = false;
             focusedElement = null;
             mousedown = false;
+
         }
     }, true);
 
@@ -46,7 +47,8 @@ function makeElementDraggable(tileElement, isNew) {
             const ELEMENT_BELLOW = getElementBellow(e.clientX, e.clientY, focusedElement);
 
             if (ELEMENT_BELLOW && ELEMENT_BELLOW.hasAttribute('droppable') &&
-                !document.elementsFromPoint(e.clientX, e.clientY).includes(document.querySelector('div#tiles_list'))) // Previnir de setar placeholder na listagem
+                !document.elementsFromPoint(e.clientX, e.clientY).includes(document.querySelector('div#tiles_list')) && // Previnir de setar placeholder na listagem
+                validateDrop(ELEMENT_BELLOW, focusedElement))
             {
                 setPlaceHolder(ELEMENT_BELLOW, focusedElement);
             }
@@ -68,7 +70,7 @@ function setPlaceHolder(elementBellow, draggedTile) {
     clearPlaceHolder();
 
     const DROP_POSITION = getDropPosition(elementBellow, draggedTile);
-    
+
     const TILE_PLACE_HOLDER = document.createElement('tilePlaceHolder');
     TILE_PLACE_HOLDER.style.position = 'relative';
     TILE_PLACE_HOLDER.style.display = 'block';

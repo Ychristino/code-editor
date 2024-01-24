@@ -13,19 +13,21 @@ tile.validation{
 tile.definition{
     background-color: rgb(173, 241, 250);
 }
-
+tile.text{
+    background-color: rgb(211, 211, 211);
+}
 tileGroup {
     display: flex;
     flex-direction: column;
     list-style-type: none;
     padding: 0;
 }
-  
+
 tileItem {
-    position: relative; 
+    position: relative;
     margin: 10px;
 }
-  
+
 tile {
     position: absolute;
     display: block;
@@ -50,7 +52,7 @@ tileHeader {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     padding: 5px;
-    
+
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -58,7 +60,7 @@ tileHeader {
     justify-content: center;
     box-sizing: border-box;
     text-align: center;
-    
+
     gap: 10px;
 }
 
@@ -66,7 +68,7 @@ tileHeader *{
     border: none;
     flex: 1;
     border-radius: 8px;
-} 
+}
 
 tileBody {
     background-color: rgba(255, 255, 255, 0.7);
@@ -86,6 +88,6 @@ tileBody:has(tile){
 
 tile:not(:has(tileBody)) {
 }
-  
+
 tile:has(tileBody) {
 }

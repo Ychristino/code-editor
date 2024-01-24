@@ -75,7 +75,7 @@ function writeline(tileElement){
             case '<label>':
                 code_line += `${currTileJSON.python_code}`;
                 break;
-            case '<input>':
+            case '<inputTile>':
                 code_line += '{tileInput}';
                 break;
             default:

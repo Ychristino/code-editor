@@ -2,8 +2,8 @@
     {
         "name":"class",
         "python_code":"class",
-        "label":"Para o cenário: <input>",
-        "format":"<label><input>",
+        "label":"Para o cenário: <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"definition",
         "has_scope":true,
         "allow_input":true,
@@ -22,8 +22,8 @@
     {
         "name":"def",
         "python_code":"def",
-        "label":"Cria lista de passos, que chamo de: <input>",
-        "format":"<label><input>",
+        "label":"Cria lista de passos, que chamo de: <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"definition",
         "has_scope":true,
         "allow_input":true,
@@ -41,8 +41,8 @@
     {
         "name":"var",
         "python_code":"",
-        "label":"Cria uma nova variável de nome: <input> com Valor = <input>",
-        "format":"<input> = <input>",
+        "label":"Cria uma nova variável de nome: <inputTile> com Valor = <inputTile>",
+        "format":"<inputTile> = <inputTile>",
         "tile_type":"definition",
         "has_scope":false,
         "allow_input":true,
@@ -61,8 +61,8 @@
     {
         "name":"if",
         "python_code":"if",
-        "label":"Se <input>",
-        "format":"<label><input>",
+        "label":"Se <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"condition",
         "has_scope":true,
         "allow_input":true,
@@ -80,8 +80,8 @@
     {
         "name":"elif",
         "python_code":"elif",
-        "label":"Senão, se <input>",
-        "format":"<label><input>",
+        "label":"Senão, se <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"condition",
         "has_scope":true,
         "allow_input":true,
@@ -118,8 +118,8 @@
     {
         "name":"or",
         "python_code":"or",
-        "label":"<input> OU <input>",
-        "format":"<input><label><input>",
+        "label":"<inputTile> OU <inputTile>",
+        "format":"<inputTile><label><inputTile>",
         "tile_type":"logical",
         "has_scope":false,
         "allow_input":true,
@@ -137,8 +137,8 @@
     {
         "name":"and",
         "python_code":"and",
-        "label":"<input> E <input>",
-        "format":"<input><label><input>",
+        "label":"<inputTile> E <inputTile>",
+        "format":"<inputTile><label><inputTile>",
         "tile_type":"logical",
         "has_scope":false,
         "allow_input":true,
@@ -195,8 +195,8 @@
     {
         "name":"assert",
         "python_code":"assert",
-        "label":"Apresenta erro se valor for diferente de: <input>",
-        "format":"<label><input>",
+        "label":"Apresenta erro se valor for diferente de: <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"validation",
         "has_scope":true,
         "allow_input":true,
@@ -234,8 +234,8 @@
     {
         "name":"catch",
         "python_code":"catch",
-        "label":"Se o erro apresentado for: <input>",
-        "format":"<label><input>",
+        "label":"Se o erro apresentado for: <inputTile>",
+        "format":"<label><inputTile>",
         "tile_type":"validation",
         "has_scope":true,
         "allow_input":true,
@@ -254,7 +254,7 @@
         "name":"catch",
         "python_code":"catch",
         "label":"Se deu erro",
-        "format":"<label><input>",
+        "format":"<label><inputTile>",
         "tile_type":"validation",
         "has_scope":true,
         "allow_input":false,
@@ -286,6 +286,26 @@
         "require_config":{
             "severity":"error",
             "parent_tile":["try","catch"]
+        }
+    },
+
+    {
+        "name":"text",
+        "python_code":null,
+        "label":"Valor: <inputText>",
+        "format":"<inputText>",
+        "tile_type":"text",
+        "has_scope":false,
+        "allow_input":true,
+        "input_config":{
+            "type":"text",
+            "tile_type":null,
+            "slots":1
+        },
+        "require_parent":false,
+        "require_config":{
+            "severity":null,
+            "parent_tile":null
         }
     }
 ]

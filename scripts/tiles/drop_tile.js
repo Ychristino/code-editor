@@ -31,10 +31,15 @@ function validateDrop(elementToDrop, tileElement){
     switch (elementToDrop.tagName){
         case "TILEBODY":
             break;
-        default:
+        case "TILEINPUT":
+            if (
+                elementToDrop.querySelector('tile') || //Se já existir um componente no Header, não permite adicionar outro
+                tileElement.querySelector('tileBody')  //Se o componente arrastado possui Body, não pode ir no Header
+                )
+                return false;
             break;
     }
-    
+
     return true;
 }
 
@@ -43,7 +48,7 @@ function getDropPosition(elementToDrop, tileElement){
     let insertBeforeElement = null;
 
     for(let i = 0; i < children.length; i++) {
-        if(children[i] === tileElement) continue; 
+        if(children[i] === tileElement) continue;
 
         let rect = children[i].getBoundingClientRect();
         if(tileElement.offsetTop < rect.top + rect.height / 2) {
@@ -65,14 +70,14 @@ function appendToTileBody(elementToDrop, tileElement){
     else{
 
         const INSERT_BEFORE = getDropPosition(elementToDrop, tileElement);
-        
+
         // Se não encontramos um elemento para inserir antes, insira no final
         if(INSERT_BEFORE === null) {
             elementToDrop.appendChild(tileElement);
         } else {
             elementToDrop.insertBefore(tileElement, INSERT_BEFORE);
         }
-        
+
         tileElement.style.position = 'relative';
         tileElement.style.top = null;
         tileElement.style.left = null;
@@ -104,4 +109,4 @@ function getElementBellow(position_x, position_y, tileElement){
     tileElement.style.pointerEvents = 'auto';
     return ELEMENT_BELLOW;
 }
-export {getElementBellow, dropTile, getDropPosition}
+export {getElementBellow, dropTile, getDropPosition, validateDrop}

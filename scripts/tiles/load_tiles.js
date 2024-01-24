@@ -36,14 +36,18 @@ function createTileHeader(jsonNode){
 
         if (jsonNode.input_config.slots){
             let headerDisplay = jsonNode.label.match(/<([^>]*)>|([^<]+)/g).filter(Boolean);
+            console.log(headerDisplay)
 
             headerDisplay.forEach(el=>{
                 switch(el){
                     case '<label>':
                         html_output += `<p>${jsonNode.label}</p>`;
                         break;
-                    case '<input>':
+                    case '<inputTile>':
                         html_output += '<tileInput droppable></tileInput>';
+                        break;
+                    case '<inputText>':
+                        html_output += '<input type="text"></input>';
                         break;
                     default:
                         html_output += el;
