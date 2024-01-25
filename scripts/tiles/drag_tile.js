@@ -1,6 +1,6 @@
 import {dropTile, getElementBellow, getDropPosition, validateDrop} from './drop_tile.js';
 
-function makeElementDraggable(tileElement, isNew) {
+function makeElementDraggable(tileElement) {
 
     const CODE_AREA = document.querySelector('#code_area');
     let x = 0;
@@ -10,6 +10,9 @@ function makeElementDraggable(tileElement, isNew) {
 
     // tile event mousedown
     tileElement.addEventListener('mousedown', function (e) {
+        // SE ESTÁ SELECIONANDO UM CAMPO DE INPUT, NÃO EXECUTA O MOVE
+        if(e.target.tagName.toLowerCase() === 'input') return ;
+
         mousedown = true;
         focusedElement = e.target.tagName !== 'TILE' ? e.target.closest('tile') : e.target
         x = tileElement.offsetLeft - e.clientX;
@@ -30,7 +33,6 @@ function makeElementDraggable(tileElement, isNew) {
             clearPlaceHolder();
             tileElement.classList.remove('moving');
 
-            isNew = false;
             focusedElement = null;
             mousedown = false;
 
@@ -99,9 +101,9 @@ function makeELementUsable(tile) {
         CLONED_NODE.style.top = `${topOriginal}px`;
         CLONED_NODE.style.left = `${leftOriginal}px`;
         CLONED_NODE.classList.add('moving');
+        
         document.querySelector('main').appendChild(CLONED_NODE);
-
-        makeElementDraggable(CLONED_NODE, true);
+        makeElementDraggable(CLONED_NODE);
 
         let mouseEvent = new MouseEvent('mousedown', {
             clientX: e.clientX,

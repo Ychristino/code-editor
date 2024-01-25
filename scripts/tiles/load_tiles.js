@@ -36,24 +36,28 @@ function createTileHeader(jsonNode){
 
         if (jsonNode.input_config.slots){
             let headerDisplay = jsonNode.label.match(/<([^>]*)>|([^<]+)/g).filter(Boolean);
-            console.log(headerDisplay)
-
             headerDisplay.forEach(el=>{
+                let created_element;
+
                 switch(el){
                     case '<label>':
-                        html_output += `<p>${jsonNode.label}</p>`;
+                        created_element = document.createElement('p');
+                        created_element.innerText = jsonNode.label
                         break;
                     case '<inputTile>':
-                        html_output += '<tileInput droppable></tileInput>';
+                        created_element = document.createElement('tileInput');
+                        created_element.setAttribute('droppable', '');
                         break;
                     case '<inputText>':
-                        html_output += '<input type="text"></input>';
+                        created_element = document.createElement('input');
+                        created_element.setAttribute('type', 'text');
                         break;
                     default:
-                        html_output += el;
+                        created_element = document.createElement('span');
+                        created_element.innerHTML = el;
                 }
+                HEADER.appendChild(created_element);
             })
-            HEADER.innerHTML = html_output;
         }
     }
     else{

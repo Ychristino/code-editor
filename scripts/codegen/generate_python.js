@@ -12,9 +12,9 @@ async function generateScript(event){
     CODE_AREA.forEach(tileElement=>{
         const MAIN_TILE = TILES_JSON.find(tileModel => tileModel.name == tileElement.id );
         const MAIN_HEADER = readHeaderCodeBlock(tileElement);
-        console.log(MAIN_HEADER)
+        console.log(MAIN_HEADER);
         const MAIN_BODY = readBodyCodeBlock(tileElement);
-        });
+    });
 }
 
 function readHeaderCodeBlock(tileElement){
@@ -41,8 +41,8 @@ function formatInput(string, inputTiles){
 
 function readBodyCodeBlock(tileElement){
     let bodyInputList = tileElement.querySelectorAll(':scope > tileBody > tile');
-
-    if (bodyInputList.length === 0) return writeline(tileElement);
+    
+    if (bodyInputList.length === 0) return ''.padStart(countIndent(tileElement), '\t') + writeline(tileElement);
 
     bodyInputList.forEach((bodyTile, index)=>{
         console.log(''.padStart(countIndent(tileElement), '\t'), readHeaderCodeBlock(bodyTile));
@@ -64,11 +64,10 @@ function countIndent(element){
 
 function writeline(tileElement){
     let code_line = '';
-
+    let textInputCount = 0;
+    let tileInputCount = 0;
     let currTileJSON = TILES_JSON.find(tileModel => tileModel.name == tileElement.id );
     let code = currTileJSON.format.match(/<([^>]*)>|([^<]+)/g);
-
-    code_line.padStart(countIndent(tileElement), '\t');
 
     code.forEach(el=>{
         switch(el){
@@ -77,6 +76,12 @@ function writeline(tileElement){
                 break;
             case '<inputTile>':
                 code_line += '{tileInput}';
+                break;
+            case '<inputText>':
+                let inputSlot = tileElement.querySelectorAll('input[type=text]')[textInputCount];
+                if (!inputSlot.value) code_line = '{textValue}'
+                else code_line += `${inputSlot.value}`;
+                textInputCount++;
                 break;
             default:
                 code_line += el;
