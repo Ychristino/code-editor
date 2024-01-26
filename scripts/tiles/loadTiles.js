@@ -1,4 +1,4 @@
-import {makeELementUsable} from './drag_tile.js';
+import {makeELementUsable} from './dragTile.js';
 
 function getTileList(tileType){
     let element = document.querySelector(`tileGroup#${tileType}`);
@@ -33,32 +33,29 @@ function createTileHeader(jsonNode){
     let html_output = '';
 
     if (jsonNode.allow_input){
+        let headerDisplay = jsonNode.label.match(/<([^>]*)>|([^<]+)/g).filter(Boolean);
+        headerDisplay.forEach(el=>{
+            let created_element;
 
-        if (jsonNode.input_config.slots){
-            let headerDisplay = jsonNode.label.match(/<([^>]*)>|([^<]+)/g).filter(Boolean);
-            headerDisplay.forEach(el=>{
-                let created_element;
-
-                switch(el){
-                    case '<label>':
-                        created_element = document.createElement('p');
-                        created_element.innerText = jsonNode.label
-                        break;
-                    case '<inputTile>':
-                        created_element = document.createElement('tileInput');
-                        created_element.setAttribute('droppable', '');
-                        break;
-                    case '<inputText>':
-                        created_element = document.createElement('input');
-                        created_element.setAttribute('type', 'text');
-                        break;
-                    default:
-                        created_element = document.createElement('span');
-                        created_element.innerHTML = el;
-                }
-                HEADER.appendChild(created_element);
-            })
-        }
+            switch(el){
+                case '<label>':
+                    created_element = document.createElement('p');
+                    created_element.innerText = jsonNode.label
+                    break;
+                case '<inputTile>':
+                    created_element = document.createElement('tileInput');
+                    created_element.setAttribute('droppable', '');
+                    break;
+                case '<inputText>':
+                    created_element = document.createElement('input');
+                    created_element.setAttribute('type', 'text');
+                    break;
+                default:
+                    created_element = document.createElement('span');
+                    created_element.innerHTML = el;
+            }
+            HEADER.appendChild(created_element);
+        })
     }
     else{
         HEADER.innerHTML = jsonNode.label;
@@ -101,7 +98,6 @@ function createTile(jsonNode){
     // }
 
     makeELementUsable(ITEM)
-    // ITEM.addEventListener('click', (e)=> makeELementUsable(e.target))
     return ITEM;
 }
 

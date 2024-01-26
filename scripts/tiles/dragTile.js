@@ -1,4 +1,4 @@
-import {dropTile, getElementBellow, getDropPosition, validateDrop} from './drop_tile.js';
+import {dropTile, getElementBellow, getDropPosition, validateDrop} from './dropTile.js';
 
 function makeElementDraggable(tileElement) {
 
