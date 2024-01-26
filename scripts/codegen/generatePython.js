@@ -8,35 +8,47 @@ BUTTON.addEventListener('click', ()=>{
 });
 const TILES_JSON = await loadJSON();
 
-
 class pythonCode extends readTiles{
-    writeline(tileElement){
-        let code_line = '';
-        let textInputCount = 0;
-        let tileInputCount = 0;
-        let currTileJSON = TILES_JSON.find(tileModel => tileModel.name == tileElement.id );
-        let code = currTileJSON.format.match(/<([^>]*)>|([^<]+)/g);
 
-        code.forEach(el=>{
+    writeElement(tileElement, inputList){
+        let codeLine = '';
+        let inputCount = 0;
+
+        let currTileJSON = TILES_JSON.find(tileModel => tileModel.name == tileElement.id );
+
+        // PROCURA O FORMATO DO CODIGO
+        let code = currTileJSON.pythonFormat.match(/<([^>]*)>|([^<]+)/g);
+
+        code.forEach((el, index)=>{
+            if (index > 0) codeLine += ' ';
+
             switch(el){
                 case '<label>':
-                    code_line += `${currTileJSON.python_code}`;
+                    codeLine += currTileJSON.python_code
                     break;
                 case '<inputTile>':
-                    code_line += '{tileInput}';
+                    // SE POSSUI ESSE INPUT NA POSICAO
+                    if (inputList && inputList.length > inputCount){
+                        codeLine += inputList[inputCount];
+                    }
+                    else{
+                        codeLine += '{INPUT_SOMETHING}'; 
+                    }
+
+                    inputCount++;
                     break;
+
                 case '<inputText>':
-                    let inputSlot = tileElement.querySelectorAll('input[type=text]')[textInputCount];
-                    if (!inputSlot.value) code_line = '{textValue}'
-                    else code_line += `${inputSlot.value}`;
-                    textInputCount++;
+                    let fieldValue = tileElement.querySelector('input[type=text]').value;
+                    if (!fieldValue) codeLine += '{EMPTY_TEXT}';
+                    else codeLine += fieldValue; 
                     break;
                 default:
-                    code_line += el;
+                    codeLine += el;
                 }
         });
 
-        code_line += currTileJSON.has_scope ? ':' : '';
-        return code_line;
+        codeLine += currTileJSON.has_scope ? ':' : '';
+        return codeLine;
     }
 }

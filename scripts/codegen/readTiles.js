@@ -11,53 +11,64 @@ export class readTiles{
         CODE_AREA.forEach(tileElement=>{
             const MAIN_TILE = TILES_JSON.find(tileModel => tileModel.name == tileElement.id );
             const MAIN_HEADER = this.readHeaderCodeBlock(tileElement);
-            console.log(MAIN_HEADER);
-            const MAIN_BODY = this.readBodyCodeBlock(tileElement);
+            const MAIN_BODY = this.readBodyCodeBlock(tileElement, 1);
+            
+            // console.log(MAIN_BODY)
+
+            MAIN_BODY.forEach((line, index)=>{
+                console.log(line);
+            });
         });
     }
 
     readHeaderCodeBlock(tileElement){
-        let headerInputList = tileElement.querySelectorAll(':scope > tileHeader > tileInput > tile');
+        let inputList = [];
 
-        if (headerInputList.length === 0) return this.writeline(tileElement);
-        let inputData = [];
+        // ENCONTRA OS SLOTS DISPONIVEIS PARA UM TILE
+        let headerInputList = tileElement.querySelectorAll(':scope > tileHeader > tileInput');
 
-        headerInputList.forEach((inputField, index)=>{
-            inputData.push(this.readHeaderCodeBlock(inputField));
+        // SE NÃO POSSUI SLOT PARA INPUT
+        if (headerInputList.length === 0){
+            return this.writeElement(tileElement);
+        }
+
+        // PERCORRE OS INPUTS
+        headerInputList.forEach((inputSlot, index)=>{
+            
+            // VERIFICA SE EXISTE UM TILE DENTRO
+            const TILE_INSIDE = inputSlot.querySelector('tile');
+
+            // PERCORRE ATÉ O TILE MAIS INTERNO
+            if (TILE_INSIDE) inputList.push(this.readHeaderCodeBlock(TILE_INSIDE));
         });
 
-        let formattedData = this.formatInput(this.writeline(tileElement), inputData).trim();
-        return formattedData
+        return this.writeElement(tileElement, inputList)
     }
 
-    formatInput(string, inputTiles){
-        // let splittedString = string.split(/{.*?}/g);
-        var i = 0;
-        return string.replace(/{.*?}/g, () => {
-            return ' ' + inputTiles[i++] + ' ';
-        });
-    }
+    readBodyCodeBlock(tileElement, indentation){
+        let lineList = [];
 
-    readBodyCodeBlock(tileElement){
+        // MAPEIA OS TILES DO BODY
         let bodyInputList = tileElement.querySelectorAll(':scope > tileBody > tile');
-        
-        if (bodyInputList.length === 0) return ''.padStart(this.countIndent(tileElement), '\t') + this.writeline(tileElement);
 
         bodyInputList.forEach((bodyTile, index)=>{
-            console.log(''.padStart(this.countIndent(tileElement), '\t'), this.readHeaderCodeBlock(bodyTile));
-            this.readBodyCodeBlock(bodyTile);
+            // LE O HEADER DO TILE
+            lineList.push(this.writeLine(this.readHeaderCodeBlock(bodyTile), indentation));
+
+            // VERIFICA SE POSSUI ELEMENTOS MAIS INTERNOS
+            let innerTiles = this.readBodyCodeBlock(bodyTile, indentation);
+            
+            // PRA CADA ELEMENTO INTERNO ADICIONA NA LISTA
+            innerTiles.forEach(tile=>{
+                lineList.push(this.writeLine(tile, indentation));
+            });
+
         });
+
+        return lineList
     }
 
-    countIndent(element){
-        let count = 0;
-
-        while (element) {
-            if (element.tagName === "TILEBODY") {
-                count++;
-            }
-            element = element.parentElement;
-        }
-        return count;
+    writeLine(line, indent){
+        return ''.padStart(indent, '\t') + line;
     }
 }
