@@ -21,7 +21,7 @@
     {
         "name":"def",
         "python_code":"def",
-        "label":"Cria lista de passos, que chamo de: <inputTile>",
+        "label":"Crio o bloco de passos: <inputTile>",
         "pythonFormat":"<label><inputTile>",
         "tile_type":"definition",
         "has_scope":true,
@@ -39,7 +39,7 @@
     {
         "name":"var",
         "python_code":"",
-        "label":"Cria uma nova variável de nome: <inputTile> com Valor = <inputTile>",
+        "label":"Crio a variável <inputTile> com valor <inputTile>",
         "pythonFormat":"<inputTile> = <inputTile>",
         "tile_type":"definition",
         "has_scope":false,
@@ -185,7 +185,7 @@
     {
         "name":"assert",
         "python_code":"assert",
-        "label":"Apresenta erro se valor for diferente de: <inputTile>",
+        "label":"Se o valor for diferente de: <inputTile>, ERRO!",
         "pythonFormat":"<label><inputTile>",
         "tile_type":"validation",
         "has_scope":true,
@@ -220,7 +220,7 @@
     },
 
     {
-        "name":"catch",
+        "name":"specificCatch",
         "python_code":"catch",
         "label":"Se o erro apresentado for: <inputTile>",
         "pythonFormat":"<label><inputTile>",
@@ -238,10 +238,10 @@
         }
     },
     {
-        "name":"catch",
+        "name":"genericCatch",
         "python_code":"catch",
-        "label":"Se deu erro",
-        "pythonFormat":"<label><inputTile>",
+        "label":"Se deu algum erro",
+        "pythonFormat":"<label>",
         "tile_type":"validation",
         "has_scope":true,
         "allow_input":false,
@@ -277,7 +277,7 @@
     {
         "name":"text",
         "python_code":null,
-        "label":"Valor: <inputText>",
+        "label":"Texto: <inputText>",
         "pythonFormat":"<inputText>",
         "tile_type":"text",
         "has_scope":false,

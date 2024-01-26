@@ -39,7 +39,7 @@ tile {
     user-select: none;
 }
 
-tileInput{
+tileInput, input[type=text]{
     background-color: rgba(255, 255, 255, 1);;
     border-radius: 6px;
     min-height: 30px;
